@@ -15,6 +15,7 @@
             $.getJSON('https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC', function (data) {
                 var bookInformation = `
                     <h2>${data.volumeInfo.title}</h2>
+                    <img src= ${data.volumeInfo.imageLinks.thumbnail} alt="I did not display correctly">
                     <p><strong>Authors:</strong> ${data.volumeInfo.authors.join(', ')}</p>
                     <p><strong>Publisher:</strong> ${data.volumeInfo.publisher}</p>
                     <p><strong>Published Date:</strong> ${data.volumeInfo.publishedDate}</p>
@@ -49,6 +50,5 @@
     });
 
         </script>
-        <h2>Milestone Content Goes here for P1</h2>
     </body>
 </html>
