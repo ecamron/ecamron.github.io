@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <h2>One Book</h2>
+        <div id="Book_Information">
+
+        </div>
         <script>
-            $getJSON('Singlebook.json', function(data){
-                console.log('It worked');
-            }
-        );
+            
+        $(document).ready(function () {
+            $.getJSON('https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC', function (data) {
+                var bookInformation = `
+                    <h2>${data.volumeInfo.title}</h2>
+                    <p><strong>Authors:</strong> ${data.volumeInfo.authors.join(', ')}</p>
+                    <p><strong>Publisher:</strong> ${data.volumeInfo.publisher}</p>
+                    <p><strong>Published Date:</strong> ${data.volumeInfo.publishedDate}</p>
+                    <p><a href="${data.volumeInfo.infoLink}" target="_blank">More Info</a></p>
+                `;
+                $('#Book_Information').html(bookInformation);
+            });
+        });
+    
         </script>
         <h2>Milestone Content Goes here for P1</h2>
     </body>
