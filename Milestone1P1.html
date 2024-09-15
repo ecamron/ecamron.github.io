@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="Style.css">
+    </head>
     <body>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <h2>One Book</h2>
@@ -16,7 +19,6 @@
                     <p><strong>Publisher:</strong> ${data.volumeInfo.publisher}</p>
                     <p><strong>Published Date:</strong> ${data.volumeInfo.publishedDate}</p>
                     <p><strong>Page Count:</strong> ${data.volumeInfo.pageCount}</p>
-                    <p><a href="${data.volumeInfo.infoLink}" target="_blank">More Info</a></p>
                 `;
                 $('#Book_Information').html(bookInformation);
             });
@@ -37,7 +39,7 @@
                         <p><strong>Authors:</strong> ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'No author information'}</p>
                         <p><strong>Publisher:</strong> ${book.volumeInfo.publisher}</p>
                         <p><strong>Published Date:</strong> ${book.volumeInfo.publishedDate}</p>
-                        <p><strong>Page Count:</strong> ${data.volumeInfo.pageCount}</p>
+                        <p><strong>Page Count:</strong> ${book.volumeInfo.pageCount}</p>
                     </div>
                     <hr>
                 `;
