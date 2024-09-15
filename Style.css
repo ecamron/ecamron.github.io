@@ -10,3 +10,9 @@ p {
 h2 {
     color: navy;
 }
+
+img {
+    float: left;
+    margin-right: 10px;
+    Width: 5%
+}
