@@ -37,7 +37,7 @@
                 bookList += `
                     <div>
                         <h3>${book.volumeInfo.title}</h3>
-                        <img src= ${book.volumeInfo.imageLinks.thumbnail} alt="I did not display correctly">
+                        <img src= ${index.volumeInfo.imageLinks.thumbnail} alt="I did not display correctly">
                         <p><strong>Authors:</strong> ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'No authors listed'}</p>
                         <p><strong>Publisher:</strong> ${book.volumeInfo.publisher}</p>
                         <p><strong>Published Date:</strong> ${book.volumeInfo.publishedDate}</p>
