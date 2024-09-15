@@ -33,8 +33,24 @@
     $(document).ready(function () {
         $.getJSON('https://www.googleapis.com/books/v1/volumes?q=modern%20web', function (data) {
             var bookList = '';
+            var imageTest =$(book.volumeInfo.imageLinks.thumbnail);
             $.each(data.items, function (index, book) {
-                bookList += `
+                imageTest.attr('src', img_url).load(function() {
+                    bookList += `
+                    <div>
+                        <h3>${book.volumeInfo.title}</h3>
+                        <img src= ${book.volumeInfo.imageLinks.thumbnail} alt="I did not display correctly">
+                        <p><strong>Authors:</strong> ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'No authors listed'}</p>
+                        <p><strong>Publisher:</strong> ${book.volumeInfo.publisher}</p>
+                        <p><strong>Published Date:</strong> ${book.volumeInfo.publishedDate}</p>
+                        <p><strong>Page Count:</strong> ${book.volumeInfo.pageCount}</p>
+                    </div>
+                    <hr>
+                `;
+                    }).error(function() {
+                        alert("image doesn't exist");
+                        imageTest.remove();
+                        bookList += `
                     <div>
                         <h3>${book.volumeInfo.title}</h3>
                         <p><strong>Authors:</strong> ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'No authors listed'}</p>
@@ -44,6 +60,7 @@
                     </div>
                     <hr>
                 `;
+                    });
             });
             $('#booklist').html(bookList);
         });
