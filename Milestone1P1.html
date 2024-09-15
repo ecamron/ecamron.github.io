@@ -15,6 +15,7 @@
                     <p><strong>Authors:</strong> ${data.volumeInfo.authors.join(', ')}</p>
                     <p><strong>Publisher:</strong> ${data.volumeInfo.publisher}</p>
                     <p><strong>Published Date:</strong> ${data.volumeInfo.publishedDate}</p>
+                    <p><strong>Page Count:</strong> ${data.volumeInfo.pageCount}</p>
                     <p><a href="${data.volumeInfo.infoLink}" target="_blank">More Info</a></p>
                 `;
                 $('#Book_Information').html(bookInformation);
@@ -28,7 +29,7 @@
         <script>
     $(document).ready(function () {
         $.getJSON('https://www.googleapis.com/books/v1/volumes?q=modern%20web', function (data) {
-            var booksList = '';
+            var bookList = '';
             $.each(data.items, function (index, book) {
                 booksList += `
                     <div>
@@ -36,11 +37,12 @@
                         <p><strong>Authors:</strong> ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'No author information'}</p>
                         <p><strong>Publisher:</strong> ${book.volumeInfo.publisher}</p>
                         <p><strong>Published Date:</strong> ${book.volumeInfo.publishedDate}</p>
+                        <p><strong>Page Count:</strong> ${data.volumeInfo.pageCount}</p>
                     </div>
                     <hr>
                 `;
             });
-            $('#booklist').html(booksList);
+            $('#booklist').html(bookList);
         });
     });
 
