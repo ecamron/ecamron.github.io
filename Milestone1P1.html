@@ -30,43 +30,11 @@
 
         </div>
         <script>
-            
-            function checkIfImageExists(url, callback) {
-            const img = new Image();
-            img.src = url;
-
-            if (img.complete) {
-            callback(true);
-            } else {
-            img.onload = () => {
-                callback(true);
-            };
-            
-            img.onerror = () => {
-                callback(false);
-            };
-            }
-        }
     $(document).ready(function () {
         $.getJSON('https://www.googleapis.com/books/v1/volumes?q=modern%20web', function (data) {
             var bookList = '';
             $.each(data.items, function (index, book) {
-                checkIfImageExists(book.volumeInfo.imageLinks.thumbnail, (exists) => {
-                    if (exists) {
-                        bookList += `
-                    <div>
-                        <h3>${book.volumeInfo.title}</h3>
-                        <img src= ${book.volumeInfo.imageLinks.thumbnail} alt="I did not display correctly">
-                        <p><strong>Authors:</strong> ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'No authors listed'}</p>
-                        <p><strong>Publisher:</strong> ${book.volumeInfo.publisher}</p>
-                        <p><strong>Published Date:</strong> ${book.volumeInfo.publishedDate}</p>
-                        <p><strong>Page Count:</strong> ${book.volumeInfo.pageCount}</p>
-                    </div>
-                    <hr>
-                `;
-                    }
-                    else {
-                        bookList += `
+                bookList += `
                     <div>
                         <h3>${book.volumeInfo.title}</h3>
                         <p><strong>Authors:</strong> ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'No authors listed'}</p>
@@ -76,8 +44,6 @@
                     </div>
                     <hr>
                 `;
-                    }
-                }) 
             });
             $('#booklist').html(bookList);
         });
