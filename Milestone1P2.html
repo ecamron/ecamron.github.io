@@ -1,6 +1,33 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="Style.css">
+    </head>
     <body>
-        <h2>Milestone Content Goes here for P2</h2>
+        <h2>Book List</h2>
+        <div id="booklist">
+
+        </div>
+        <script>
+    $(document).ready(function () {
+        $.getJSON('https://www.googleapis.com/books/v1/volumes?q=modern%20web', function (data) {
+            var bookList = '';
+            $.each(data.items, function (index, book) {
+                bookList += `
+                    <div>
+                        <h3>${book.volumeInfo.title}</h3>
+                        <p><strong>Authors:</strong> ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'No authors listed'}</p>
+                        <p><strong>Publisher:</strong> ${book.volumeInfo.publisher}</p>
+                        <p><strong>Published Date:</strong> ${book.volumeInfo.publishedDate}</p>
+                        <p><strong>Page Count:</strong> ${book.volumeInfo.pageCount}</p>
+                    </div>
+                    <hr>
+                `;
+            });
+            $('#booklist').html(bookList);
+        });
+    });
+
+        </script>
     </body>
 </html>
