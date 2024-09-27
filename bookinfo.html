@@ -5,24 +5,29 @@
     </head>
     <body>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <h2>One Book</h2>
+        <h2>Book Information</h2>
         <div id="Book_Information">
 
         </div>
         <script>
             
         $(document).ready(function () {
-            $.getJSON('https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC', function (data) {
+            var url = window.location.href;
+            var bookid = url.substring(url.lastIndexOf("=") + 1);
+            console.log(bookid);
+            $.getJSON('https://www.googleapis.com/books/v1/volumes/' +bookid, function (data) {
                 var bookInformation = `
                     <h2>${data.volumeInfo.title}</h2>`;
-
+                    if (data.volumeInfo.imageLinks != null)
+                            bookInformation+=`<img src= ${data.volumeInfo.imageLinks.thumbnail} alt="I did not display correctly">`;
                     bookInformation+=`
-                    <img src= ${data.volumeInfo.imageLinks.thumbnail} alt="I did not display correctly">
                     <p><strong>Authors:</strong> ${data.volumeInfo.authors.join(', ')}</p>
                     <p><strong>Publisher:</strong> ${data.volumeInfo.publisher}</p>
                     <p><strong>Published Date:</strong> ${data.volumeInfo.publishedDate}</p>
                     <p><strong>Page Count:</strong> ${data.volumeInfo.pageCount}</p>
-                `;
+                    <p><strong>Description:</strong> ${data.volumeInfo.description}</p>
+                    `;
+                    
                 $('#Book_Information').html(bookInformation);
             });
         });
