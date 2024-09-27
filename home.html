@@ -5,24 +5,113 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
+        <h1 id="information">Enter a search term in the box below.</h1>
+        <input type="text" name="search" value="search">
+        <button id="search">Search</button>
+        <input type="radio" id="page1" name="pages" value="1">
+        <label for="page1">Page 1</label>
+        <input type="radio" id="page2" name="pages" value="2">
+        <label for="page1">Page 2</label>
+        <div id="results" style="display: flex; flex-wrap: wrap;"></div>
         <script>
+            
             $(function(){
+                $("#search").click(function(){
+
+
                 
-                $("#search_box").submit(function(e) {
-                    console.log('submitting');
-                    var value = $("#input_name").val();
-          
-                    $('#search_results').text(value);
-                    e.preventDefault();
+                var term = $("input:text").val(); //or get the value from a textbox user input; you can Google how to do it.
+                var parameter="?q="+term+"&maxResults=30"; 
+                var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
+
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#information").html("Results for " + term + " page 1")
+                    $("#results").html(resultHTML); 
+                    $(".bookdiv").css("width", "300px");
+                });
+                });
+                $("#page1").click(function(){
+                    var term = $("input:text").val(); //or get the value from a textbox user input; you can Google how to do it.
+                var parameter="?q="+term+"&maxResults=30"; 
+                var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
+
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#information").html("Results for " + term + " page 1")
+                    $("#results").html(resultHTML); 
+                    $(".bookdiv").css("width", "300px");
+                });
+                });
+                $("#page2").click(function(){
+                    var term = $("input:text").val(); //or get the value from a textbox user input; you can Google how to do it.
+                var parameter="?q="+term+"&startIndex=30&maxResults=30"; 
+                var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
+
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#information").html("Results for " + term + " page 2")
+                    $("#results").html(resultHTML); 
+                    $(".bookdiv").css("width", "300px");
+                });
                 });
             });
-          </script>
+        </script>
           
-          <form id="search_box">
-              <input type="text" id="input_name" />
-              <input type="submit" id="submit" value="search" />
-          </form>
           
-          <p id="search_results"></p>
     </body>
 </html>
