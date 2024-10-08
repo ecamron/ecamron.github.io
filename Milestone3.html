@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home Search</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <input type="text" name="search" value="search">
+        <button id="search">Search</button>
+        <input type="radio" id="page1" name="pages" value="1">
+        <label for="page1">Page 1</label>
+        <input type="radio" id="page2" name="pages" value="2">
+        <label for="page1">Page 2</label>
+        <h1 id="information">Enter a search term in the box above</h1>
+        <div id="totalDIV">
+            <div id="results" style="display: flex; flex-wrap: wrap; float: left; width: 50%;"></div>
+            <div id="Lorem" style="float: right; width: 50%;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
+        </div>
+        <script>
+            
+            $(function(){
+                $("#search").click(function(){
+
+
+                
+                var term = $("input:text").val(); 
+                var parameter="?q="+term+"&maxResults=30"; 
+                var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
+
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a id='booklink' href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#information").html("Results for " + term + " page 1")
+                    $("#results").html(resultHTML); 
+                    $(".bookdiv").css("padding", "30px");
+                });
+                });
+                $("#page1").click(function(){
+                    var term = $("input:text").val(); 
+                var parameter="?q="+term+"&maxResults=30"; 
+                var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
+
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a id='booklink' href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#information").html("Results for " + term + " page 1")
+                    $("#results").html(resultHTML); 
+                    $(".bookdiv").css("width", "300px");
+                });
+                });
+                $("#page2").click(function(){
+                    var term = $("input:text").val(); 
+                var parameter="?q="+term+"&startIndex=30&maxResults=30"; 
+                var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
+
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a id='booklink' href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#information").html("Results for " + term + " page 2")
+                    $("#results").html(resultHTML); 
+                    $(".bookdiv").css("width", "300px");
+                });
+                });
+                $("#booklink").click(function(){
+
+                });
+            });
+        </script>
+          
+          
+    </body>
+</html>
