@@ -2,23 +2,50 @@
 <html>
     <head>
         <title>Home Search</title>
+        <link rel="stylesheet" href="M3.CSS">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
+        <div id="Upper Page" style="position: relative; height: 150px;">
         <input type="text" name="search" value="search">
         <button id="search">Search</button>
-        <input type="radio" id="page1" name="pages" value="1">
-        <label for="page1">Page 1</label>
-        <input type="radio" id="page2" name="pages" value="2">
-        <label for="page1">Page 2</label>
+
         <h1 id="information">Enter a search term in the box above</h1>
-        <div id="totalDIV">
-            <div id="results" style="display: flex; flex-wrap: wrap; float: left; width: 50%;"></div>
-            <div id="Lorem" style="float: right; width: 50%;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
+
+        <ul class="page-buttons">
+            <li>
+                <input type="radio" id="page1" name="pages" value="1">
+                <label for="page1">1</label>
+            </li>
+            <li>
+                <input type="radio" id="page2" name="pages" value="2">
+                <label for="page2">2</label>
+            </li>
+            <li>
+                <input type="radio" id="page3" name="pages" value="3">
+                <label for="page3">3</label>
+            </li>
+            <li>
+                <input type="radio" id="page4" name="pages" value="4">
+                <label for="page4">4</label>
+            </li>
+            <li>
+                <input type="radio" id="page5" name="pages" value="5">
+                <label for="page5">5</label>
+            </li>
+        </ul>
         </div>
+        
+        <div id="totalDIV" style="position:relative">
+            <div id="results" style="display: flex; flex-wrap: wrap; float: left; width: 50%;"></div>
+            <div id="details" style="float: right; width: 50%;"></div>
+        </div>
+        
+        <h2>My Bookshelf</h2>
+        <div id="bookshelf" style="display: flex; flex-wrap: wrap;"></div>
         <script>
             
-            $(function(){
+            $(document).ready(function(){
                 $("#search").click(function(){
 
 
@@ -54,7 +81,7 @@
                 });
                 $("#page1").click(function(){
                     var term = $("input:text").val(); 
-                var parameter="?q="+term+"&maxResults=30"; 
+                var parameter="?q="+term+"&maxResults=10"; 
                 var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
                 console.log("Service point: "+service_point)
                 $.getJSON(service_point, function (json)
@@ -84,7 +111,7 @@
                 });
                 $("#page2").click(function(){
                     var term = $("input:text").val(); 
-                var parameter="?q="+term+"&startIndex=30&maxResults=30"; 
+                var parameter="?q="+term+"&startIndex=10&maxResults=10"; 
                 var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
                 console.log("Service point: "+service_point)
                 $.getJSON(service_point, function (json)
@@ -112,8 +139,142 @@
                     $(".bookdiv").css("width", "300px");
                 });
                 });
-                $("#booklink").click(function(){
+                $("#page3").click(function(){
+                    var term = $("input:text").val(); 
+                var parameter="?q="+term+"&startIndex=20&maxResults=10"; 
+                var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
 
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a id='booklink' href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#information").html("Results for " + term + " page 3")
+                    $("#results").html(resultHTML); 
+                    $(".bookdiv").css("width", "300px");
+                });
+                });
+                $("#page4").click(function(){
+                    var term = $("input:text").val(); 
+                var parameter="?q="+term+"&startIndex=30&maxResults=10"; 
+                var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
+
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a id='booklink' href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#information").html("Results for " + term + " page 4")
+                    $("#results").html(resultHTML); 
+                    $(".bookdiv").css("width", "300px");
+                });
+                });
+                $("#page5").click(function(){
+                    var term = $("input:text").val(); 
+                var parameter="?q="+term+"&startIndex=40&maxResults=10"; 
+                var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
+
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a id='booklink' href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#information").html("Results for " + term + " page 5")
+                    $("#results").html(resultHTML); 
+                    $(".bookdiv").css("width", "300px");
+                });
+                });
+                $(document).on('click','#booklink',function(event){
+                    event.preventDefault();
+                    var url = $(this).attr("href");
+                    var bookid = url.substring(url.lastIndexOf("=") + 1);
+                    console.log(bookid);
+                    $.getJSON('https://www.googleapis.com/books/v1/volumes/' +bookid, function (data) {
+                        var bookInformation = `
+                            <h2>${data.volumeInfo.title}</h2>`;
+                            if (data.volumeInfo.imageLinks != null)
+                                    bookInformation+=`<img src= ${data.volumeInfo.imageLinks.thumbnail} alt="I did not display correctly">`;
+                            bookInformation+=`
+                            <p><strong>Authors:</strong> ${data.volumeInfo.authors.join(', ')}</p>
+                            <p><strong>Publisher:</strong> ${data.volumeInfo.publisher}</p>
+                            <p><strong>Published Date:</strong> ${data.volumeInfo.publishedDate}</p>
+                            <p><strong>Page Count:</strong> ${data.volumeInfo.pageCount}</p>
+                            <p><strong>Description:</strong> ${data.volumeInfo.description}</p>
+                            `;
+                            
+                        $('#details').html(bookInformation);
+                    });
+                    
+                });
+                var service_point="https://www.googleapis.com/books/v1/users/118446286271270983004/bookshelves/1001/volumes"
+                console.log("Service point: "+service_point)
+                $.getJSON(service_point, function (json)
+                {
+                    console.log(json);
+                    var total=json.totalItems;
+                    $("#total").text(total); 
+                    
+                    var resultHTML="";
+                    for (i in json.items)
+                    {
+                        var booktitle=json.items[i].volumeInfo.title;
+                        var bookid=json.items[i].id;
+                        var cover="";
+                        if (json.items[i].volumeInfo.imageLinks != null)
+                            cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
+
+                        resultHTML+="<div class='bookdiv'>";
+                        resultHTML+="<img src='"+cover+"' style='float: left' />";
+                        resultHTML+="<a id='booklink' href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+                        resultHTML+="</div>";;
+                    }
+                    $("#bookshelf").html(resultHTML); 
+                    $(".bookdiv").css("width", "300px");
                 });
             });
         </script>
